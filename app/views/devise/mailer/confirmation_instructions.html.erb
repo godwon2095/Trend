@@ -1,0 +1,7 @@
+<div class="container">
+  <p>환영합니다! <%= @email %>님!</p>
+
+  <p>Trend 서비스에 가입해 주셔서 감사합니다! 아래 링크로 들어가시면 계정인증을 하실 수 있습니다.</p>
+
+  <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+</div>

@@ -1,0 +1,8 @@
+<div class="container">
+  <%= @post.id %>번 째 글입니다.<br>
+  제목:<%= @post.title %><br>
+  내용:<%= @post.content %><br>
+  <%= link_to '목록', posts_path, class: "btn purple lighten-1" %>
+  <%= link_to '수정', edit_post_path(@post), class: "btn purple lighten-1" %>
+  <%= link_to '삭제', post_path(@post.id), method: :delete, class: "btn purple lighten-1" %>
+</div>

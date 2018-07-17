@@ -1,0 +1,10 @@
+<div class="container">
+  <br><br>
+  <%= link_to '질문등록', new_post_path, class: "waves-effect waves-light btn purple lighten-1" %><br>
+
+  <div class="collection">
+    <% @posts.each do |p| %>
+    <a href="<%= post_path(p) %>" class="collection-item"><span class="badge"><%= p.created_at %></span>Q. <%= p.title %><span class="right"></span></a>
+    <% end %>
+  </div>
+</div>
