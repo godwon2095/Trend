@@ -1,16 +1,82 @@
 <div class="container">
-  <h2>Sign up</h2>
+  <h2>회원가입</h2>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= devise_error_messages! %>
 
     <div class="field">
-      <%= f.label :email %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      <%= f.label :name, '닉네임' %><br />
+      <%= f.text_field :name, autofocus: "off" %>
     </div>
 
     <div class="field">
-      <%= f.label :password %>
+      <%= f.label :email, '이메일' %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div><br>
+
+    <div class="field">
+      <%= f.label :gender, '성별' %>
+      <p>
+        <label>
+          <input class="with-gap" name="gender" type="radio"/>
+          <span>남자</span>
+        </label>
+      </p>
+      <p>
+        <label>
+          <input class="with-gap" name="gender" type="radio" />
+          <span>여자</span>
+        </label>
+      </p>
+      <p>
+        <label>
+          <input class="with-gap" name="gender" type="radio"  />
+          <span>해당없음</span>
+        </label>
+      </p>
+    </div><br>
+
+    <div class="field">
+      <%= f.label :birth, '생년월일' %>
+      <%= f.text_field :birth, class: "datepicker", placeholder: "생년월일" %>
+    </div><br>
+
+    <div class="field">
+      <%= f.label :height, '키' %>
+      <%= f.select :height, options_for_select([["키를 골라주세요", ""], "134이하", "135~140", "141~145", "146~150", "151~155", "156~160", "161~165", "166~170", "171~175", "176~180", "181~185", "186~190", "191이상"]), :class => 'browser-default text-purple' %>
+    </div>
+    <br>
+
+    <div class="field">
+      <%= f.label :weight, '몸무게' %>
+      <%= f.select :weight, options_for_select([["몸무게를 골라주세요", ""], "34이하", "35~40", "41~45", "46~50", "51~55", "56~60", "61~65", "66~70", "71~75", "76~80", "81~85", "86~90", "91~95", "96~100", "101이상"]), :class => 'browser-default text-purple' %>
+    </div>
+    <br>
+
+    <div class="field">
+      <%= f.label :shape, '체형' %>
+      <%= f.select :shape, options_for_select([["체형을 골라주세요", ""], :매우마름, :마름, :보통, :근육형, :약간살찜, :살찜]), :class => 'browser-default text-purple' %>
+    </div>
+    <br>
+
+    <div class="field">
+      <%= f.label :skinton, '피부톤' %>
+      <%= f.select :skinton, options_for_select([["피부톤을 골라주세요", ""], "백색", "약간백색", "황색", "약간흑색", "흑색"]), :class => 'browser-default text-purple' %>
+    </div><br>
+
+    <div class="field">
+      <%= f.label :category, '좋아하는 스타일' %>
+      <%= f.select :category, options_for_select([["가장 선호하는 스타일을 골라주세요", ""], "캐주얼", "댄디", "아메카지", "터프", "섹시", "청순", "힙", "화려"]), :class => 'browser-default text-purple' %>
+    </div><br>
+
+    <div class="field">
+      <%= f.label :area, '사는지역' %>
+      <%= f.select :area, options_for_select([["살고계신 지역을 골라주세요", ""], "서울특별시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주도", "제주특별자치도", "부산광역시", "대구광역시", "인천광역시",
+         "광주광역시", "대전광역시", "울산광역시", "세종특별자치시"]), :class => 'browser-default text-purple' %>
+    </div><br>
+
+    <div class="field">
+      <%= f.label :password, '비밀번호' %>
       <% if @minimum_password_length %>
       <em>(<%= @minimum_password_length %> characters minimum)</em>
       <% end %><br />
@@ -18,14 +84,41 @@
     </div>
 
     <div class="field">
-      <%= f.label :password_confirmation %><br />
+      <%= f.label :password_confirmation, '비밀번호확인' %><br />
       <%= f.password_field :password_confirmation, autocomplete: "off" %>
     </div>
+<br>
+
+    <div class="field">
+      <%= f.label :check_info, '정보공개여부' %>
+      <p>
+        <label>
+          <input class="with-gap" name="check_info" type="radio"/>
+          <span>공개</span>
+        </label>
+      </p>
+      <p>
+        <label>
+          <input class="with-gap" name="check_info" type="radio" />
+          <span>비공개</span>
+        </label>
+      </p>
+    </div><br>
 
     <div class="actions">
-      <%= f.submit "Sign up" %>
+      <%= f.submit "가입하기", class: "btn purple lighten-1" %>
     </div>
   <% end %>
-
+<br><br>
   <%= render "devise/shared/links" %>
 </div>
+
+<script>
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
+
+  $(document).ready(function(){
+    $('.datepicker').datepicker();
+  });
+</script>
