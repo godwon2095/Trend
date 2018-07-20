@@ -1,8 +1,35 @@
 <div class="container">
-  <%= @post.id %>번 째 글입니다.<br>
-  제목:<%= @post.title %><br>
-  내용:<%= @post.content %><br>
-  <%= link_to '목록', posts_path, class: "btn purple lighten-1" %>
-  <%= link_to '수정', edit_post_path(@post), class: "btn purple lighten-1" %>
-  <%= link_to '삭제', post_path(@post.id), method: :delete, class: "btn purple lighten-1" %>
+  <h3>제목:<%= @post.title %></h3>
+  <p class="right"><%= @post.created_at %><br>조회수 : <%= @post.view_count %></p><br><br>
+
+  <p><%= @post.content %></p><br>
+
+  <%= link_to '삭제', post_path(@post.id), method: :delete, class: "btn purple lighten-1 right", :data => {:confirm => '정말 삭제하시겠습니까?'} %>
+  <%= link_to '목록', posts_path, class: "btn purple lighten-1 right" %>
+  <%= link_to '수정', edit_post_path(@post), class: "btn purple lighten-1 right" %>
+  <!-- 댓글기능 -->
+  <%= form_for(@comment, url: post_comments_path(@post)) do |f| %>
+    <div class="input-field">
+      <%= f.text_area :content, class: "materialize-textarea", placeholder: "댓글쓰기...", required: true %>
+    </div>
+    <div class="input-field">
+      <%= f.submit "댓글 쓰기", class: "btn purple lighten-1 right" %>
+    </div>
+  <% end %><br><br>
+
+  <% if @post.comments.present? %>
+    <ul class="collection">
+      <% @post.comments.each do |c| %>
+        <li class="collection-item">
+          <span class="title"><%= c.user.name %></span>
+          <span class="right"><%= c.created_at %></span>
+          <p class="pre-line"><%= c.content %>
+          <% if c.user.id == current_user.id %>
+            <%= link_to '삭제', post_comment_path(@post, c), method: :delete, class: "right", :data => {:confirm => '정말 삭제하시겠습니까?'} %>
+          <% end %>
+          </p>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
 </div>

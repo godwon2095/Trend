@@ -22,6 +22,9 @@ class PostsController < ApplicationController
   end
 
   def show
+    @comment = Comment.new
+    @post.view_count += 1
+    @post.save
   end
 
   def edit

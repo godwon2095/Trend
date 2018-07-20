@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :comments
+
   enum gender: [:남자, :여자, :해당없음]
   enum shape: [:매우마름, :마름, :보통, :근육형, :약간살찜, :살찜]
   enum skinton: [:백색, :약간백색, :황색, :약간흑색, :흑색]
