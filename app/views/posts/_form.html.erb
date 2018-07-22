@@ -1,15 +1,23 @@
 <%= form_for @post do |f| %>
+
+  <h2>질문 작성</h2>
+
   <div class="field">
-    <%= f.label :title %>
+    <%= f.label :title, '질문' %>
     <%= f.text_field :title %>
-  </div>
+  </div><br>
 
   <div class="field">
-    <%= f.label :content %>
+    <%= f.label :image, "image", class: "material-icons" %>
+    <%= file_field_tag :image %>
+  </div><br>
+
+  <div class="field">
+    <%= f.label :content, '내용' %>
     <%= f.text_area :content %>
-  </div>
+  </div><br>
 
-  <div class="field">
+  <div class="input-field">
     <%= f.submit '작성', class: "btn purple lighten-1", :data => {:confirm => '글을 올리시겠습니까?'}%>
   </div>
 

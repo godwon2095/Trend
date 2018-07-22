@@ -5,6 +5,7 @@ class CreatePosts < ActiveRecord::Migration[5.2]
       t.text :content
       t.integer :view_count, default: 0
       t.string :image
+      t.belongs_to :user
 
       t.timestamps
     end

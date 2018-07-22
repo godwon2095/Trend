@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.4.2'
 gem 'jquery-rails'
 
+gem 'carrierwave', '~> 1.0'
 gem 'devise'
 gem 'activeadmin'
 gem "active_material", github: "vigetlabs/active_material"

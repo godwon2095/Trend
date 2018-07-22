@@ -5,6 +5,15 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :comments
+  has_many :likes
+  has_many :liked_posts, through: :likes, source: :post
+
+  # mount_uploader :image, AvatarUploader
+
+  has_many :follower_relation, foreign_key: "followed_id", class_name: "Follow"
+	has_many :followers, through: :follower_relation, source: :follower
+	has_many :following_relation, foreign_key: "follower_id", class_name: "Follow"
+	has_many :followings, through: :following_relation, source: :followed
 
   enum gender: [:남자, :여자, :해당없음]
   enum shape: [:매우마름, :마름, :보통, :근육형, :약간살찜, :살찜]
@@ -16,4 +25,7 @@ class User < ApplicationRecord
   enum area: ["서울특별시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주도", "제주특별자치도", "부산광역시", "대구광역시", "인천광역시",
      "광주광역시", "대전광역시", "울산광역시", "세종특별자치시"]
 
+  def is_like?(post)
+    Like.find_by(user_id: self.id, post_id: post.id).present?
+  end
 end

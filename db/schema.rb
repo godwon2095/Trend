@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_20_135153) do
+ActiveRecord::Schema.define(version: 2018_07_22_014210) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -54,13 +54,21 @@ ActiveRecord::Schema.define(version: 2018_07_20_135153) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "follows", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "followed_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["followed_id"], name: "index_follows_on_followed_id"
+    t.index ["follower_id", "followed_id"], name: "index_follows_on_follower_id_and_followed_id", unique: true
+    t.index ["follower_id"], name: "index_follows_on_follower_id"
+  end
+
   create_table "likes", force: :cascade do |t|
     t.integer "user_id"
     t.integer "post_id"
-    t.integer "comment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["comment_id"], name: "index_likes_on_comment_id"
     t.index ["post_id"], name: "index_likes_on_post_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
@@ -70,8 +78,10 @@ ActiveRecord::Schema.define(version: 2018_07_20_135153) do
     t.text "content"
     t.integer "view_count", default: 0
     t.string "image"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

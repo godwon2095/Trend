@@ -1,12 +1,64 @@
 <div class="container">
-  <h3>제목:<%= @post.title %></h3>
-  <p class="right"><%= @post.created_at %><br>조회수 : <%= @post.view_count %></p><br><br>
+  <h3>Q. <%= @post.title %></h3>
+
+  <p>글 쓴 이:
+
+  <!--썸네일-->
+  <%= link_to "#{@post.user.name}", '#' %>
+
+  <!--팔로우기능-->
+  <% if user_signed_in? && current_user != @post.user %>
+      <% if current_user.followings.include?(@post.user) %>
+          <%= form_tag follow_path(@post.user.id), method: :delete do %>
+          <%= button_tag "팔로우 취소", class: "btn right grey", :data => {:confirm => "정말 팔로우 취소하시겠습니까?"} %>
+          <% end %>
+      <% else %>
+          <%= form_tag follows_path do %>
+              <input type="hidden" name="followed_id" value="<%= @post.user.id %>">
+              <%= button_tag "글쓴이 팔로우", class: "btn right grey" %>
+          <% end %>
+      <% end %>
+  <% end %> <br><br>
+
+  <p class="right"><%= @post.created_at %><br>조회수 : <%= @post.view_count %></p><br><br><br>
 
   <p><%= @post.content %></p><br>
+
+  <div class="card-image">
+    <% if @post.image? %>
+      <%= image_tag(@post.image) %>
+    <% end %>
+  </div>
+
+  <p class="right">
+  <!--Dropdown trigger-->
+  <% if @post.likes %>
+      <a class='dropdown-trigger' href='#' data-target='dropdown1'><%= @post.likes.size%>명</a>이 좋아합니다.
+  <% else %>
+      <%= @post.likes.size %>명이 좋아합니다.
+  <% end %>
+
+  <% if current_user.is_like?(@post) %>
+      <%= link_to "좋아요 취소", post_like_path(@post), method: :post %></p>
+  <% else %>
+      <%= link_to "좋아요", post_like_path(@post), method: :post %></p>
+  <% end %>
+
+  <!--Dropdown collaps-->
+  <ul id='dropdown1' class="dropdown-content right">
+      <% @post.liked_users.all.each do |p| %>
+          <li class="size-down"><%= link_to "#{p.name}", "#" %></li>
+      <% end %>
+  </ul>
+  <!--Dropdown end-->
+
+<br><br><br>
 
   <%= link_to '삭제', post_path(@post.id), method: :delete, class: "btn purple lighten-1 right", :data => {:confirm => '정말 삭제하시겠습니까?'} %>
   <%= link_to '목록', posts_path, class: "btn purple lighten-1 right" %>
   <%= link_to '수정', edit_post_path(@post), class: "btn purple lighten-1 right" %>
+<br><br>
+
   <!-- 댓글기능 -->
   <%= form_for(@comment, url: post_comments_path(@post)) do |f| %>
     <div class="input-field">
@@ -33,3 +85,7 @@
     </ul>
   <% end %>
 </div>
+
+<script>
+    $('.dropdown-trigger').dropdown();
+</script>

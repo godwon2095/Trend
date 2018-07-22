@@ -24,7 +24,7 @@
         <% if user_signed_in? %>
           <li><%= link_to '질문게시판', posts_path %></li>
           <li><%= link_to '로그아웃', destroy_user_session_path, method: :delete %></li>
-          <li><%= link_to '회원정보수정', edit_user_registration_path %></li>
+          <li><%= link_to '마이페이지', edit_user_registration_path %></li>
         <% else %>
           <li><%= link_to '로그인', new_user_session_path %></li>
           <li><%= link_to '회원가입', new_user_registration_path %></li>
@@ -35,23 +35,26 @@
 
 
   <ul class="sidenav" id="mobile-demo">
+    <% if user_signed_in? %>
     <li><div class="user-view">
       <div class="background">
         <img src="/fashion2.jpg">
       </div>
       <a href="#user"><img class="circle" src="/fashion1.jpg"></a>
-      <a href="#name"><span class="white-text name">John Doe</span></a>
-      <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+      <a href="#name"><span class="white-text name"><%= current_user.name %></span></a>
+      <a href="#email"><span class="white-text email"><%= current_user.email %></span></a>
+    <% end %>
     </div></li>
-    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
+    <% if user_signed_in? %>
+    <li><a href="<%= edit_user_registration_path %>"><i class="material-icons">add_alert</i>알람</a></li>
+    <li><a href="<%= edit_user_registration_path %>"><i class="material-icons">perm_identity</i>마이페이지</a></li>
+    <% end %>
     <li><div class="divider"></div></li>
     <li><a class="subheader">Trend</a></li>
     <li ><a href="<%= root_path %>" class="large material-icons">home홈</a></li>
     <% if user_signed_in? %>
       <li><a href="<%= posts_path %>" class="large material-icons">mode_edit질문게시판</a></li>
       <li><%= link_to '로그아웃', destroy_user_session_path, method: :delete %></li>
-      <li><%= link_to '회원정보수정', edit_user_registration_path %></li>
     <% else %>
       <li><%= link_to '로그인', new_user_session_path %></li>
       <li><%= link_to '회원가입', new_user_registration_path %></li>
