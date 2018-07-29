@@ -1,12 +1,10 @@
 <nav>
   <div class="nav-wrapper purple lighten-3">
-    <form>
-      <div class="input-field">
-        <input id="search" type="search" placeholder="찾으시는 질문이 있나요?" required>
-        <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-        <i class="material-icons">close</i>
-      </div>
-    </form>
+    <%= form_tag search_posts_path, class: "input-field", method: :get, multipart: true do %>
+      <input id="search" type="search" placeholder="찾으시는 질문이 있나요?" name="search" required>
+      <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+      <i class="material-icons">close</i>
+    <% end %>
   </div>
 </nav>
 
@@ -16,7 +14,9 @@
 
   <div class="collection">
     <% @posts.each do |p| %>
-    <a href="<%= post_path(p) %>" class="collection-item"><span class="badge"><%= p.created_at %></span>Q. <%= p.title %><span class="right"></span></a>
+    <a href="<%= post_path(p) %>" class="collection-item"><span class="badge"><%= time_ago_in_words p.created_at %> ago</span>Q. <%= p.title %><span class="right"></span></a>
     <% end %>
   </div>
+  <%= will_paginate @posts %>
+
 </div>

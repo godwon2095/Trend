@@ -18,7 +18,8 @@
   </div><br>
 
   <div class="input-field">
-    <%= f.submit '작성', class: "btn purple lighten-1", :data => {:confirm => '글을 올리시겠습니까?'}%>
+    <%= f.submit '작성', class: "btn purple lighten-1" %>
+    <%= link_to '목록', posts_path, class: "btn purple lighten-1" %>
   </div>
 
 

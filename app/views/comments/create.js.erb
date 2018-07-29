@@ -1,0 +1,4 @@
+$('#comment').append('<span class="title">'+"<%= @new_comment.user.name %>"+'</span>'+
+                            '<span class="right">'+"<%= @new_comment.created_at %>"+'</span>'+
+                            '<p class="pre-line">'+"<%= @new_comment.content %>"+
+                            '</p>');

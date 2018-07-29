@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index
-    @posts = Post.all.order(created_at: :desc)
+    @posts = Post.all.order(created_at: :desc).paginate(:page => params[:page], :per_page => 8)
   end
 
   def new
@@ -11,6 +11,8 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(set_params)
+    @post.user_id = current_user.id
+    @post.image = params[:post][:image]
     respond_to do |format|
       if @post.save
         format.html{ redirect_to post_path(@post),
@@ -31,6 +33,7 @@ class PostsController < ApplicationController
   end
 
   def update
+    @post.image = params[:post][:image]
     respond_to do |format|
       if @post.update(set_params)
         format.html{redirect_to post_path(@post),
@@ -48,9 +51,17 @@ class PostsController < ApplicationController
     end
   end
 
+  def search
+    if params[:search].present?
+      @post = Post.search(params[:search])
+    else
+      @post = Post.all
+    end
+  end
+
   private
   def set_params
-    params.require(:post).permit(:title, :content, :image)
+    params.require(:post).permit(:title, :content)
   end
 
   def set_post

@@ -10,12 +10,12 @@
   <% if user_signed_in? && current_user != @post.user %>
       <% if current_user.followings.include?(@post.user) %>
           <%= form_tag follow_path(@post.user.id), method: :delete do %>
-          <%= button_tag "팔로우 취소", class: "btn right grey", :data => {:confirm => "정말 팔로우 취소하시겠습니까?"} %>
+          <%= button_tag "팔로우 취소", class: "btn right purple lighten-2" %>
           <% end %>
       <% else %>
           <%= form_tag follows_path do %>
               <input type="hidden" name="followed_id" value="<%= @post.user.id %>">
-              <%= button_tag "글쓴이 팔로우", class: "btn right grey" %>
+              <%= button_tag "글쓴이 팔로우", class: "btn right purple lighten-2" %>
           <% end %>
       <% end %>
   <% end %> <br><br>
@@ -53,10 +53,11 @@
   <!--Dropdown end-->
 
 <br><br><br>
-
+  <% if current_user.id == @post.user.id %>
   <%= link_to '삭제', post_path(@post.id), method: :delete, class: "btn purple lighten-1 right", :data => {:confirm => '정말 삭제하시겠습니까?'} %>
-  <%= link_to '목록', posts_path, class: "btn purple lighten-1 right" %>
   <%= link_to '수정', edit_post_path(@post), class: "btn purple lighten-1 right" %>
+  <% end %>
+  <%= link_to '목록', posts_path, class: "btn purple lighten-1 right" %>
 <br><br>
 
   <!-- 댓글기능 -->
@@ -72,7 +73,7 @@
   <% if @post.comments.present? %>
     <ul class="collection">
       <% @post.comments.each do |c| %>
-        <li class="collection-item">
+        <li class="collection-item" id="comment">
           <span class="title"><%= c.user.name %></span>
           <span class="right"><%= c.created_at %></span>
           <p class="pre-line"><%= c.content %>

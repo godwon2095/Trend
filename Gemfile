@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.4.2'
 gem 'jquery-rails'
 
+gem 'will_paginate', '~> 3.1.0'
 gem 'carrierwave', '~> 1.0'
 gem 'devise'
 gem 'activeadmin'
@@ -12,6 +13,9 @@ gem "active_material", github: "vigetlabs/active_material"
 gem 'rails', '~> 5.2.0'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
+gem 'pg', '~> 0.21', :group => :production
+gem 'rails_12factor', :group => :production
+gem 'pg_search'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets

@@ -3,12 +3,16 @@ before_action :authenticate_user!
 before_action :check_ownership!, only: [:destroy]
 
   def create
-    new_comment = Comment.new(content: params[:comment][:content],
+    @new_comment = Comment.new(content: params[:comment][:content],
                               image: params[:comment][:image],
                               post_id: params[:post_id],
                               user_id: current_user.id)
-    new_comment.save
-    redirect_back(fallback_location: root_path)
+    @new_comment.save
+    @post = @new_comment.post
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def destroy
