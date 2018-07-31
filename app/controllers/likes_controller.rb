@@ -9,6 +9,12 @@ class LikesController < ApplicationController
       like.destroy
     end
 
-    redirect_back(fallback_location: root_path)
+    @post = Post.find(params[:post_id])
+
+    respond_to do |format|
+      format.js
+    end
+
+    # redirect_back(fallback_location: root_path)
   end
 end

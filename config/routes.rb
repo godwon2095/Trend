@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :posts do
     resources :comments, only: [:create, :destroy], defaults: { format: 'js' }
-    post "/like", to:"likes#like_toggle"
+    post "/like", to:"likes#like_toggle", defaults: { format: 'js' }
     collection do
       get :search
     end

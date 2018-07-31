@@ -1,4 +1,7 @@
-$('#comment').append('<span class="title">'+"<%= @new_comment.user.name %>"+'</span>'+
-                            '<span class="right">'+"<%= @new_comment.created_at %>"+'</span>'+
-                            '<p class="pre-line">'+"<%= @new_comment.content %>"+
-                            '</p>');
+$('#comment').val("");
+$('#postcomment').append('<li class="collection-item">'+
+                        '<span class="title">'+"<%= @new_comment.user.name %>"+'</span>'+
+                        '<span class="right">'+"<%= @new_comment.created_at %>"+'</span>'+
+                        '<p class="pre-line">'+"<%= @new_comment.content %>"+
+                        '<%= link_to '삭제', post_comment_path(@post, @new_comment), method: :delete, class: "right", :data => {:confirm => '정말 삭제하시겠습니까?'} %>'+
+                        '</p>'+'</li>');
