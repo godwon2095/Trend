@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :follows, only: [:create, :destroy]
+  resources :follows, only: [:create, :destroy], defaults: { format: 'js' }
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

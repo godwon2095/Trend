@@ -4,12 +4,21 @@ class FollowsController < ApplicationController
   def create
     Follow.create(follower_id: current_user.id,
                   followed_id: params[:followed_id])
-    redirect_back(fallback_location: root_path)
+
+    @user = User.find(params[:followed_id])
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def destroy
     Follow.find_by(follower_id: current_user.id,
                    followed_id: params[:id]).destroy
-    redirect_back(fallback_location: root_path)
+    @user = User.find(params[:followed_id])
+
+    respond_to do |format|
+      format.js
+    end
   end
 end

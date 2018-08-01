@@ -9,13 +9,14 @@
   <!--팔로우기능-->
   <% if user_signed_in? && current_user != @post.user %>
       <% if current_user.followings.include?(@post.user) %>
-          <%= form_tag follow_path(@post.user.id), method: :delete do %>
-          <%= button_tag "팔로우 취소", class: "btn right purple lighten-2" %>
+          <%= form_tag follow_path(@post.user.id), method: :delete, remote: true do %>
+            <input type="hidden" name="followed_id" value="<%= @post.user.id %>">
+            <%= button_tag "팔로우 취소", {id: :follow, class: "btn right purple lighten-2"} %>
           <% end %>
       <% else %>
-          <%= form_tag follows_path do %>
+          <%= form_tag follows_path, remote: true do %>
               <input type="hidden" name="followed_id" value="<%= @post.user.id %>">
-              <%= button_tag "글쓴이 팔로우", class: "btn right purple lighten-2" %>
+              <%= button_tag "글쓴이 팔로우", {id: "follow", class: "btn right purple lighten-2"} %>
           <% end %>
       <% end %>
   <% end %> <br><br>
@@ -33,16 +34,12 @@
   <p class="right">
   <!--Dropdown trigger-->
   <% if @post.likes %>
-      a class='dropdown-trigger' href='#' data-target='dropdown1'><span id="like_size"><<%= @post.likes.size %></span>명</a>이 좋아합니다.
+      <a class='dropdown-trigger' href='#' data-target='dropdown1'><span id="like_size"><%= @post.likes.size %></span>명</a>이 좋아합니다.
   <% else %>
       <span id="like_size"><%= @post.likes.size %></span>명이 좋아합니다.
   <% end %>
 
-  <% if current_user.is_like?(@post) %>
-      <%= link_to "좋아요 취소", post_like_path(@post), method: :post, id: :dislike, remote: true %></p>
-  <% else %>
-      <%= link_to "좋아요", post_like_path(@post), method: :post, id: :like, remote: true %></p>
-  <% end %>
+  <%= link_to (current_user.is_like?(@post) ? '없애기' : '좋아요'), post_like_path(@post), method: :post, remote: true, id: 'like_toggle' %></p>
 
   <!--Dropdown collaps-->
   <ul id='dropdown1' class="dropdown-content right">
