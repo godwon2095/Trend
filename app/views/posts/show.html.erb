@@ -49,6 +49,8 @@
   </ul>
   <!--Dropdown end-->
 
+  <h1>hello</h1>
+
 <br><br><br>
   <% if current_user.id == @post.user.id %>
   <%= link_to '삭제', post_path(@post.id), method: :delete, class: "btn purple lighten-1 right", :data => {:confirm => '정말 삭제하시겠습니까?'} %>
